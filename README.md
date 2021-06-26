@@ -1,8 +1,10 @@
-# Getting Started with Create React App
+# Daytrip
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Explore any area with a randomly generated one day trip.
 
 ## Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
