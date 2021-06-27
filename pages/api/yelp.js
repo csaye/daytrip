@@ -6,7 +6,8 @@ const data = {
 };
 
 export default async function handler(req, res) {
-  const response = await fetch(baseUrl, data);
+  const url = `${baseUrl}?location=${req.location}`;
+  const response = await fetch(url, data);
   const json = await response.json();
   res.status(response.status).json(json);
 }
