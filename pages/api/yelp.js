@@ -6,7 +6,11 @@ const data = {
 };
 
 export default async function handler(req, res) {
-  const url = `${baseUrl}?location=${req.location}`;
+  // get query string
+  const query = Object.keys(req.query)
+  .map(key => `${key}=${req.query[key]}`).join('&');
+  const url = `${baseUrl}?${query}`;
+  // make request
   const response = await fetch(url, data);
   const json = await response.json();
   res.status(response.status).json(json);

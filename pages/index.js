@@ -6,16 +6,14 @@ export default function Home() {
   const [location, setLocation] = useState('');
 
   // searches yelp api for matching parameters
-  async function search() {
-    // construct api request
-    const request = {
-      location: location
-    };
+  async function search(queryObj) {
+    // get query string
+    const query = Object.keys(queryObj)
+    .map(key => `${key}=${queryObj[key]}`).join('&');
     // get api response
-    const response = await fetch('/api/yelp', request);
+    const response = await fetch(`/api/yelp?${query}`);
+    const json = await response.json();
     if (response.ok) {
-      const json = await response.json();
-      console.log(json);
     }
   }
 
@@ -38,7 +36,8 @@ export default function Home() {
       </button>
       <form onSubmit={e => {
         e.preventDefault();
-        search();
+        // search with manual location
+        search({ location });
       }}>
         <input
           value={location}
