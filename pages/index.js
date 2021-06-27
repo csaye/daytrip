@@ -19,8 +19,23 @@ export default function Home() {
     }
   }
 
+  function searchCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        // search with latitude and longitude
+        const latitude = pos.coords.latitude;
+        const longitude = pos.coords.longitude;
+        search({ latitude, longitude });
+      },
+      error => console.warn(error)
+    );
+  }
+
   return (
     <div className={styles.home}>
+      <button onClick={searchCurrentLocation}>
+        Search with Current Location
+      </button>
       <form onSubmit={e => {
         e.preventDefault();
         search();
@@ -30,7 +45,7 @@ export default function Home() {
           onChange={e => setLocation(e.target.value)}
           required
         />
-        <button>Search</button>
+        <button>Search with Manual Location</button>
       </form>
     </div>
   );
