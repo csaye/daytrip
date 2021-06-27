@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Business from '../components/Business/Business.js';
+import Calendar from '../components/Calendar/Calendar.js';
 
 import styles from '../styles/Home.module.css';
 
@@ -54,6 +55,7 @@ export default function Home() {
           <button>Search with Manual Location</button>
         </form>
       </div>
+      <Calendar />
       {
         businesses.length ?
         <div className={styles.businesslist}>
