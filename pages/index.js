@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import Business from '../components/Business/Business.js';
 
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const [location, setLocation] = useState('');
+  const [businesses, setBusinesses] = useState([]);
 
   // searches yelp api for matching parameters
   async function search(queryObj) {
@@ -14,6 +16,7 @@ export default function Home() {
     const response = await fetch(`/api/yelp?${query}`);
     const json = await response.json();
     if (response.ok) {
+      setBusinesses(json.businesses);
     }
   }
 
@@ -46,6 +49,13 @@ export default function Home() {
         />
         <button>Search with Manual Location</button>
       </form>
+      {
+        businesses.length ?
+        businesses.map(business =>
+          <Business key={business.id} business={business} />
+        ) :
+        <p>No businesses yet</p>
+      }
     </div>
   );
 }
