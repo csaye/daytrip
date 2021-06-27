@@ -34,6 +34,9 @@ export default function Home() {
 
   return (
     <div>
+      <div className={styles.header}>
+        <h1>Daytrip</h1>
+      </div>
       <div className={styles.searchbar}>
         <button onClick={searchCurrentLocation}>
           Search with Current Location

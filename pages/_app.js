@@ -8,6 +8,8 @@ export default function App({ Component, pageProps }) {
         <title>Daytrip</title>
         <meta name="description" content="Explore any area with a randomly generated one day trip." />
         <link rel="icon" href="/favicon.ico" />
+        <link href="https://fonts.googleapis.com/css?family=Work%20Sans:300,600" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet" />
       </Head>
       <Component {...pageProps} />
     </>
