@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 import Business from '../components/Business/Business.js';
 import Calendar from '../components/Calendar/Calendar.js';
 
+import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const [location, setLocation] = useState('');
   const [businesses, setBusinesses] = useState([]);
 
+  const router = useRouter();
+
   // searches yelp api for matching parameters
-  async function search(queryObj) {
+  function search(queryObj) {
     // get query string
     const query = Object.keys(queryObj)
     .map(key => `${key}=${queryObj[key]}`).join('&');
-    // get api response
-    const response = await fetch(`/api/yelp?${query}`);
-    const json = await response.json();
-    if (response.ok) {
-      setBusinesses(json.businesses);
-    }
+    // pass parameters to trip page
+    router.push(`/trip?${query}`);
   }
 
   function searchCurrentLocation() {
