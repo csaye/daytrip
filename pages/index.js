@@ -33,27 +33,33 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.home}>
-      <button onClick={searchCurrentLocation}>
-        Search with Current Location
-      </button>
-      <form onSubmit={e => {
-        e.preventDefault();
-        // search with manual location
-        search({ location });
-      }}>
-        <input
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-          required
-        />
-        <button>Search with Manual Location</button>
-      </form>
+    <div>
+      <div className={styles.searchbar}>
+        <button onClick={searchCurrentLocation}>
+          Search with Current Location
+        </button>
+        <form onSubmit={e => {
+          e.preventDefault();
+          // search with manual location
+          search({ location });
+        }}>
+          <input
+            value={location}
+            onChange={e => setLocation(e.target.value)}
+            required
+          />
+          <button>Search with Manual Location</button>
+        </form>
+      </div>
       {
         businesses.length ?
-        businesses.map(business =>
-          <Business key={business.id} business={business} />
-        ) :
+        <div className={styles.businesslist}>
+          {
+            businesses.map(business =>
+              <Business key={business.id} business={business} />
+            )
+          }
+        </div> :
         <p>No businesses yet</p>
       }
     </div>

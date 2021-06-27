@@ -1,0 +1,11 @@
+.searchbar {
+  background: #efefef;
+  text-align: center;
+  padding: 10px;
+}
+
+.businesslist {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
