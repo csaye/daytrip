@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -9,11 +10,28 @@ import styles from './Calendar.module.css';
 export default function Calendar() {
   const [events, setEvents] = useState([]);
 
-  function createEvent(selectInfo) {}
+  // creates event on selection
+  function createEvent(selectInfo) {
+    // get calendar component
+    const calendar = selectInfo.view.calendar;
+    // clear selection
+    calendar.unselect();
+    // add event
+    const title = prompt('Enter event term (e.g. ice cream, park, diner): ');
+    if (title) {
+      calendar.addEvent({
+        id: uuid(),
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
+        title: title
+      });
+    }
+  }
 
-  function editEvent(eventInfo) {}
-
-  function updateEventTime(eventInfo) {}
+  // delete event on click
+  function deleteEvent(clickInfo) {
+    if (confirm('Delete event?')) clickInfo.event.remove();
+  }
 
   return (
     <div className={styles.container}>
@@ -21,16 +39,14 @@ export default function Calendar() {
         <FullCalendar
           initialView="timeGridDay"
           height="auto"
-          events={events}
           plugins={[timeGridPlugin, interactionPlugin]}
           allDaySlot={false}
           selectable={true}
           editable={true}
           eventResizableFromStart={true}
           select={createEvent}
-          eventClick={editEvent}
-          eventDrop={updateEventTime}
-          eventResize={updateEventTime}
+          eventClick={deleteEvent}
+          eventsSet={setEvents}
         />
       </div>
     </div>
