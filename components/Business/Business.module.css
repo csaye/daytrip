@@ -51,3 +51,7 @@
 .rating {
   text-align: right;
 }
+
+.stars {
+  margin: -4px 0;
+}
