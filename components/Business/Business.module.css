@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  background: #efefef;
+  margin: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cover {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+}
+
+.cover > img {
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.summary {
+  padding: 10px;
+}
+
+.summary p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info > div {
+  max-width: calc(50% - 5px);
+}
+
+.rating {
+  text-align: right;
+}
