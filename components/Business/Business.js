@@ -1,12 +1,15 @@
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import styles from './Business.module.css';
 
 export default function Business(props) {
-  const { image_url, url, name, location, rating, review_count, categories } = props.business;
+  const { image_url, url, name, location, timespan } = props.business;
   const { address1, city, state, zip_code } = location;
+  const { start, end } = timespan;
+  const { rating, review_count, categories } = props.business;
 
   // returns star components representing rating
   function getStars() {
@@ -17,6 +20,12 @@ export default function Business(props) {
       else stars.push(<StarIcon key={`star${i}`} />);
     }
     return stars;
+  }
+
+  // returns time string for given time
+  function getTimeStr(time) {
+    const date = new Date(time);
+    return date.toLocaleTimeString([], { timeStyle: 'short' });
   }
 
   return (
@@ -38,6 +47,11 @@ export default function Business(props) {
               <p className={styles.stars}>{getStars()}</p>
               <p>{review_count} reviews</p>
             </div>
+          </div>
+          <div>
+            <p className={styles.timespan}>
+              {getTimeStr(start)} → {getTimeStr(end)}
+            </p>
           </div>
         </div>
       </a>

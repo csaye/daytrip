@@ -55,3 +55,11 @@
 .stars {
   margin: -4px 0;
 }
+
+.timespan {
+  text-align: center;
+}
+
+.timespan > p {
+  margin: 0;
+}
