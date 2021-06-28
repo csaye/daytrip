@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Business from '../components/Business/Business.js';
 import Calendar from '../components/Calendar/Calendar.js';
 
 import { useRouter } from 'next/router';
@@ -7,12 +6,14 @@ import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const [location, setLocation] = useState('');
-  const [businesses, setBusinesses] = useState([]);
+  const [events, setEvents] = useState([]);
 
   const router = useRouter();
 
   // searches yelp api for matching parameters
   function search(queryObj) {
+    // encode events
+    queryObj.events = encodeURIComponent(JSON.stringify(events));
     // get query string
     const query = Object.keys(queryObj)
     .map(key => `${key}=${queryObj[key]}`).join('&');
@@ -54,18 +55,7 @@ export default function Home() {
           <button>Search with Manual Location</button>
         </form>
       </div>
-      <Calendar />
-      {
-        businesses.length ?
-        <div className={styles.businesslist}>
-          {
-            businesses.map(business =>
-              <Business key={business.id} business={business} />
-            )
-          }
-        </div> :
-        <p>No businesses yet</p>
-      }
+      <Calendar setEvents={setEvents} />
     </div>
   );
 }
