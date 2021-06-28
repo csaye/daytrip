@@ -22,9 +22,35 @@ export default function Trip() {
     return response.ok ? json.businesses : undefined;
   }
 
+  // gets businesses based on given router query
+  async function getBusinesses(query, events) {
+    const newBusinesses = [];
+    // for each event
+    for (const e of events) {
+      // search with query and term
+      const result = await search({ ...query, term: e.term });
+      if (!result?.length) continue;
+      // append random business from result
+      const randomIndex = Math.floor(Math.random() * result.length);
+      const business = {
+        ...result[randomIndex],
+        timespan: { start: e.start, end: e.end }
+      };
+      newBusinesses.push(business);
+    }
+    setBusinesses(newBusinesses);
+  }
+
+  // get router query on start
   useEffect(() => {
+    // if router ready, parse query
     if (router.isReady) {
-      console.log(router.query);
+      const query = router.query;
+      // parse events json
+      const events = JSON.parse(query.events);
+      delete query.events;
+      // get businesses with query
+      getBusinesses(query, events);
     }
   }, [router]);
 
