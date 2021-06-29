@@ -5,3 +5,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.businesslist {
+  display: flex;
+  flex-direction: column;
+}

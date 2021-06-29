@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from '../components/Calendar/Calendar.js';
+import Business from '../components/Business/Business.js';
 
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
+import getBusinesses from '../util/getBusinesses.js';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState('');
   const [events, setEvents] = useState([]);
+  const [businesses, setBusinesses] = useState(undefined);
 
   const router = useRouter();
 
-  // searches yelp api for matching parameters
-  function search(queryObj) {
-    // encode events
-    queryObj.events = encodeURIComponent(JSON.stringify(events));
-    // get query string
-    const query = Object.keys(queryObj)
-    .map(key => `${key}=${queryObj[key]}`).join('&');
-    // pass parameters to trip page
-    router.push(`/trip?${query}`);
+  // searches for businesses with given query
+  async function search(query) {
+    const newBusinesses = await getBusinesses(query, events);
+    setBusinesses(newBusinesses);
+    setLoading(false);
   }
 
   // searches with current location
@@ -39,16 +38,19 @@ export default function Home() {
     );
   }
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
-      <div className={styles.header}>
-        <h1>Daytrip</h1>
-      </div>
-      {
-        loading ?
-        <p>Loading...</p> :
-        <>
-          <div className={styles.searchbar}>
+      <div className={styles.searchbar}>
+        {
+          businesses ?
+          <button onClick={() => setBusinesses(undefined)}>
+            Return
+          </button> :
+          <>
             <button onClick={searchCurrentLocation}>
               Search with Current Location
             </button>
@@ -56,7 +58,7 @@ export default function Home() {
               e.preventDefault();
               // search with manual location
               setLoading(true);
-              search({ location });
+              getBusinesses({ location });
             }}>
               <input
                 value={location}
@@ -65,9 +67,19 @@ export default function Home() {
               />
               <button>Search with Manual Location</button>
             </form>
-          </div>
-          <Calendar setEvents={setEvents} />
-        </>
+          </>
+        }
+      </div>
+      {
+        businesses ?
+        <div className={styles.businesslist}>
+          {
+            businesses.map(business =>
+              <Business key={business.id} business={business} />
+            )
+          }
+        </div> :
+        <Calendar setEvents={setEvents} />
       }
     </div>
   );
