@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import styles from './Business.module.css';
 
 export default function Business(props) {
-  const { image_url, url, name, location, timespan } = props.business;
+  const { image_url, url, name, location, term, timespan } = props.business;
   const { address1, city, state, zip_code } = location;
   const { start, end } = timespan;
   const { rating, review_count, categories } = props.business;
@@ -31,6 +31,11 @@ export default function Business(props) {
   return (
     <div className={styles.container}>
       <a href={url} target="_blank" rel="noreferrer noopener">
+      <div className={styles.content}>
+        <div className={styles.schedule}>
+          <p>{term}</p>
+          <p>{getTimeStr(start)} → {getTimeStr(end)}</p>
+        </div>
         <div className={styles.cover}>
           <img src={image_url} alt=""/>
         </div>
@@ -48,12 +53,8 @@ export default function Business(props) {
               <p>{review_count} reviews</p>
             </div>
           </div>
-          <div>
-            <p className={styles.timespan}>
-              {getTimeStr(start)} → {getTimeStr(end)}
-            </p>
-          </div>
         </div>
+      </div>
       </a>
     </div>
   );

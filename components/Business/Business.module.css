@@ -1,15 +1,22 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  background: #efefef;
-  margin: 10px;
-  border-radius: 10px;
   overflow: hidden;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+}
+
+.schedule {
+  min-width: 200px;
+  width: 200px;
+  text-align: center;
 }
 
 .cover {
   height: 250px;
+  min-width: 400px;
+  width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,6 +31,8 @@
 
 .summary {
   padding: 10px;
+  min-width: 300px;
+  width: 500px;
 }
 
 .summary p {
@@ -54,12 +63,4 @@
 
 .stars {
   margin: -4px 0;
-}
-
-.timespan {
-  text-align: center;
-}
-
-.timespan > p {
-  margin: 0;
 }

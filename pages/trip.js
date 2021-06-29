@@ -34,6 +34,7 @@ export default function Trip() {
       const randomIndex = Math.floor(Math.random() * result.length);
       const business = {
         ...result[randomIndex],
+        term: e.term,
         timespan: { start: e.start, end: e.end }
       };
       newBusinesses.push(business);
@@ -56,7 +57,9 @@ export default function Trip() {
 
   return (
     <div>
-      <Link href="/">Home</Link>
+      <div className={styles.toolbar}>
+        <Link href="/">Home</Link>
+      </div>
       {
         businesses ?
         <div className={styles.businesslist}>
