@@ -1,0 +1,11 @@
+.header {
+  height: 60px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header > h1 {
+  font-family: 'Poppins', sans-serif;
+}

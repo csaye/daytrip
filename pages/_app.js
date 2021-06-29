@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import '../styles/globals.css';
+import styles from '../styles/App.module.css';
 import '@fullcalendar/common/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
@@ -14,6 +15,9 @@ export default function App({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css?family=Work%20Sans:300,600" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Poppins:600" rel="stylesheet" />
       </Head>
+      <div className={styles.header}>
+        <h1>Daytrip</h1>
+      </div>
       <Component {...pageProps} />
     </>
   );
