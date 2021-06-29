@@ -38,49 +38,51 @@ export default function Home() {
     );
   }
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <div>
-      <div className={styles.searchbar}>
-        {
-          businesses ?
-          <button onClick={() => setBusinesses(undefined)}>
-            Return
-          </button> :
-          <>
-            <button onClick={searchCurrentLocation}>
-              Search with Current Location
-            </button>
-            <form onSubmit={e => {
-              e.preventDefault();
-              // search with manual location
-              setLoading(true);
-              getBusinesses({ location });
-            }}>
-              <input
-                value={location}
-                onChange={e => setLocation(e.target.value)}
-                required
-              />
-              <button>Search with Manual Location</button>
-            </form>
-          </>
-        }
-      </div>
       {
-        businesses ?
+        loading ?
+        <p>Loading...</p> :
+        <div className={styles.searchbar}>
+          {
+            businesses ?
+            <button onClick={() => setBusinesses(undefined)}>
+              Return
+            </button> :
+            <>
+              <button onClick={searchCurrentLocation}>
+                Search with Current Location
+              </button>
+              <form onSubmit={e => {
+                e.preventDefault();
+                // search with manual location
+                setLoading(true);
+                getBusinesses({ location });
+              }}>
+                <input
+                  value={location}
+                  onChange={e => setLocation(e.target.value)}
+                  required
+                />
+                <button>Search with Manual Location</button>
+              </form>
+            </>
+          }
+        </div>
+      }
+      {
+        businesses &&
         <div className={styles.businesslist}>
           {
             businesses.map(business =>
               <Business key={business.id} business={business} />
             )
           }
-        </div> :
-        <Calendar setEvents={setEvents} />
+        </div>
       }
+      <div style={{ display: (businesses || loading) ? 'none' : 'block' }}>
+        <Calendar setEvents={setEvents} />
+      </div>
     </div>
   );
 }
