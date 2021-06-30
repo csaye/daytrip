@@ -10,3 +10,8 @@
   display: flex;
   flex-direction: column;
 }
+
+.map {
+  margin: 40px;
+  text-align: center;
+}

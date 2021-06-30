@@ -5,19 +5,23 @@ import Business from '../components/Business/Business.js';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import getBusinesses from '../util/getBusinesses.js';
+import getMapUrl from '../util/getMapUrl.js';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState('');
   const [events, setEvents] = useState([]);
   const [businesses, setBusinesses] = useState(undefined);
+  const [mapUrl, setMapUrl] = useState(undefined);
 
   const router = useRouter();
 
   // searches for businesses with given query
   async function search(query) {
     const newBusinesses = await getBusinesses(query, events);
+    const newMapUrl = await getMapUrl(query, newBusinesses);
     setBusinesses(newBusinesses);
+    setMapUrl(newMapUrl);
     setLoading(false);
   }
 
@@ -46,14 +50,17 @@ export default function Home() {
         <div className={styles.searchbar}>
           {
             businesses ?
-            <button onClick={() => setBusinesses(undefined)}>
+            <button onClick={() => {
+              setBusinesses(undefined);
+              setMapUrl(undefined);
+            }}>
               Return
             </button> :
             <>
               <button onClick={searchCurrentLocation}>
                 Search with Current Location
               </button>
-              <form onSubmit={e => {
+              {/*<form onSubmit={e => {
                 e.preventDefault();
                 // search with manual location
                 setLoading(true);
@@ -65,19 +72,31 @@ export default function Home() {
                   required
                 />
                 <button>Search with Manual Location</button>
-              </form>
+              </form>*/}
             </>
           }
         </div>
       }
       {
-        businesses &&
+        (businesses && !loading) &&
         <div className={styles.businesslist}>
           {
             businesses.map(business =>
               <Business key={business.id} business={business} />
             )
           }
+        </div>
+      }
+      {
+        (mapUrl && !loading) &&
+        <div className={styles.map}>
+          <iframe
+            width="500"
+            height="300"
+            frameBorder="0"
+            src={mapUrl}
+            allowFullScreen
+          />
         </div>
       }
       <div style={{ display: (businesses || loading) ? 'none' : 'block' }}>
