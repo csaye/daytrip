@@ -12,6 +12,7 @@ import getCoordinates from '../util/getCoordinates.js';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ error: false, text: 'Create your schedule below.' });
 
   const [searchType, setSearchType] = useState('location');
   const [address, setAddress] = useState('');
@@ -24,12 +25,13 @@ export default function Home() {
 
   const router = useRouter();
 
+  // reset message when search type changes
+  useEffect(() => {
+    setMessage({ error: false, text: 'Create your schedule below.' });
+  }, [searchType]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // searches for businesses at given coordinates
   async function search(coordinates) {
-    if (!events.length) {
-      alert('Must create at least one event.');
-      return;
-    }
     setLoading(true);
     const newBusinesses = await getBusinesses(coordinates, events);
     const newMapUrl = await getMapUrl(coordinates, newBusinesses);
@@ -40,6 +42,13 @@ export default function Home() {
 
   // searches with current location
   async function searchCurrentLocation() {
+    // check events
+    if (!events.length) {
+      alert('Must create at least one event.');
+      return;
+    }
+    setLoading(true);
+    // retrieve current position
     navigator.geolocation.getCurrentPosition(
       pos => {
         // search with latitude and longitude
@@ -48,7 +57,10 @@ export default function Home() {
           longitude: pos.coords.longitude
         });
       },
-      error => console.warn(error)
+      error => {
+        setMessage({ error: true, text: 'Location not enabled.' })
+        setLoading(false);
+      }
     );
   }
 
@@ -203,6 +215,9 @@ export default function Home() {
             </button>
           </form>
         }
+        <p style={{ color: message.error ? 'red' : 'inherit' }}>
+          {message.text}
+        </p>
       </div>
       }
       <div style={{
@@ -213,6 +228,3 @@ export default function Home() {
     </>
   );
 }
-
-
-// src={mapUrl}
