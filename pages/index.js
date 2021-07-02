@@ -12,6 +12,11 @@ import getMapUrl from '../util/getMapUrl.js';
 export default function Home() {
   const [loading, setLoading] = useState(false);
 
+  const [searchType, setSearchType] = useState('location');
+  const [address, setAddress] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+
   const [events, setEvents] = useState([]);
   const [businesses, setBusinesses] = useState(undefined);
   const [mapUrl, setMapUrl] = useState(undefined);
@@ -20,6 +25,11 @@ export default function Home() {
 
   // searches for businesses at given coordinates
   async function search(coordinates) {
+    if (!events.length) {
+      alert('Must create at least one event.');
+      return;
+    }
+    setLoading(true);
     const newBusinesses = await getBusinesses(coordinates, events);
     const newMapUrl = await getMapUrl(coordinates, newBusinesses);
     setBusinesses(newBusinesses);
@@ -29,18 +39,15 @@ export default function Home() {
 
   // searches with current location
   async function searchCurrentLocation() {
-    setLoading(true);
     navigator.geolocation.getCurrentPosition(
       pos => {
         // search with latitude and longitude
-        const latitude = pos.coords.latitude;
-        const longitude = pos.coords.longitude;
-        search({ latitude, longitude });
+        search({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        });
       },
-      error => {
-        console.warn(error);
-        setLoading(false);
-      }
+      error => console.warn(error)
     );
   }
 
@@ -84,27 +91,70 @@ export default function Home() {
           </div>
         </> :
         <div className={styles.searchbar}>
-          <p>Search with current location</p>
-          <button
-            onClick={searchCurrentLocation}
-            className={styles.iconbutton}
-          >
-            <SearchIcon />
-          </button>
-          {/*<form onSubmit={e => {
-            e.preventDefault();
-            // search with manual location
-            setLoading(true);
-            getBusinesses({ location });
-          }}>
+          <p>
+            Search with{' '}
+            <select
+              value={searchType}
+              onChange={e => setSearchType(e.target.value)}
+            >
+              <option value="location">Current Location</option>
+              <option value="address">Address</option>
+              <option value="coordinates">Coordinates</option>
+            </select>
+          </p>
+          {
+            searchType === 'location' &&
+            <button
+              onClick={searchCurrentLocation}
+              className={styles.iconbutton}
+            >
+              <SearchIcon />
+            </button>
+          }
+          {
+            searchType === 'address' &&
+            <form onSubmit={e => {
+              e.preventDefault();
+              search({
+                latitude: address,
+                longitude: address
+              });
+            }}>
             <input
-              value={location}
-              onChange={e => setLocation(e.target.value)}
+              placeholder="address"
+              value={address}
+              onChange={e => setAddress(e.target.value)}
               required
             />
-            <button>Search with Manual Location</button>
-          </form>*/}
-        </div>
+            <button className={styles.iconbutton}>
+              <SearchIcon />
+            </button>
+          </form>
+        }
+        {
+          searchType === 'coordinates' &&
+          <form onSubmit={e => {
+            e.preventDefault();
+            search({ latitude, longitude });
+          }}>
+            <input
+              placeholder="latitude"
+              value={latitude}
+              onChange={e => setLatitude(e.target.value)}
+              required
+            />
+            <input
+              placeholder="longitude"
+              value={longitude}
+              onChange={e => setLongitude(e.target.value)}
+              required
+            />
+            <button className={styles.iconbutton}>
+              <SearchIcon />
+            </button>
+          </form>
+        }
+      </div>
       }
       <div style={{
         display: ((businesses && mapUrl) || loading) ? 'none' : 'block'
