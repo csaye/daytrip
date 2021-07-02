@@ -51,6 +51,38 @@ export default function Home() {
     );
   }
 
+  // searches with coordinates
+  function searchCoordinates() {
+    // check events
+    if (!events.length) {
+      alert('Must create at least one event.');
+      return;
+    }
+    // get latitude and longitude
+    const floatLat = parseFloat(latitude);
+    const floatLong = parseFloat(longitude);
+    // check for invalid numbers
+    if (isNaN(floatLat) || isNaN(floatLong)) {
+      setMessage({ error: true, text: 'Coordinates must be numbers.' });
+      return;
+    }
+    // verify latitude
+    if (floatLat < -90 || floatLat > 90) {
+      setMessage({ error: true, text: 'Latitude must be between -90 and 90.' });
+      return;
+    }
+    // verify longitude
+    if (floatLong < -180 || floatLong > 180) {
+      setMessage({ error: true, text: 'Longitude must be between -180 and 180.' });
+      return;
+    }
+    // search with latitude and longitude
+    search({
+      latitude: floatLat,
+      longitude: floatLong
+    });
+  }
+
   return (
     <>
       {
@@ -135,7 +167,7 @@ export default function Home() {
           searchType === 'coordinates' &&
           <form onSubmit={e => {
             e.preventDefault();
-            search({ latitude, longitude });
+            searchCoordinates();
           }}>
             <input
               placeholder="latitude"
