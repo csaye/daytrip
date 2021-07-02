@@ -11,24 +11,24 @@ import getMapUrl from '../util/getMapUrl.js';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState('');
+
   const [events, setEvents] = useState([]);
   const [businesses, setBusinesses] = useState(undefined);
   const [mapUrl, setMapUrl] = useState(undefined);
 
   const router = useRouter();
 
-  // searches for businesses with given query
-  async function search(query) {
-    const newBusinesses = await getBusinesses(query, events);
-    const newMapUrl = await getMapUrl(query, newBusinesses);
+  // searches for businesses at given coordinates
+  async function search(coordinates) {
+    const newBusinesses = await getBusinesses(coordinates, events);
+    const newMapUrl = await getMapUrl(coordinates, newBusinesses);
     setBusinesses(newBusinesses);
     setMapUrl(newMapUrl);
     setLoading(false);
   }
 
   // searches with current location
-  function searchCurrentLocation() {
+  async function searchCurrentLocation() {
     setLoading(true);
     navigator.geolocation.getCurrentPosition(
       pos => {
@@ -45,10 +45,12 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <>
       {
         loading ?
-        <p className={styles.loadtext}>Loading...</p> :
+        <div className={styles.loaddiv}>
+          <p className={styles.loadtext}>Loading...</p>
+        </div> :
         (businesses && mapUrl) ?
         <>
           <div className={styles.searchbar}>
@@ -109,7 +111,7 @@ export default function Home() {
       }}>
         <Calendar setEvents={setEvents} />
       </div>
-    </div>
+    </>
   );
 }
 

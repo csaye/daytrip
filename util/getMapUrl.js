@@ -1,7 +1,6 @@
-export default async function getMapUrl(originQuery, businesses) {
+export default async function getMapUrl(coordinates, businesses) {
   // get origin
-  const origin = originQuery.location ??
-  `${originQuery.latitude},${originQuery.longitude}`;
+  const origin = `${coordinates.latitude},${coordinates.longitude}`;
   const queryObj = {};
   queryObj.origin = origin;
   queryObj.destination = origin;

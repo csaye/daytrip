@@ -1,5 +1,12 @@
+.loaddiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 60px);
+}
+
 .loadtext {
-  margin: 10px;
+  font-size: 32px;
 }
 
 .searchbar {
