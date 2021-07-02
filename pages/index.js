@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import getBusinesses from '../util/getBusinesses.js';
 import getMapUrl from '../util/getMapUrl.js';
+import getCoordinates from '../util/getCoordinates.js';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,25 @@ export default function Home() {
       },
       error => console.warn(error)
     );
+  }
+
+  // searches with address
+  async function searchAddress() {
+    // check events
+    if (!events.length) {
+      alert('Must create at least one event.');
+      return;
+    }
+    const json = await getCoordinates(address);
+    // if valid address
+    if (json?.geometry?.location) {
+      const location = json.geometry.location;
+      search({
+        latitude: location.lat,
+        longitude: location.lng
+      });
+    // if invalid address
+    } else setMessage({ error: true, text: 'Invalid address.' });
   }
 
   // searches with coordinates
@@ -147,10 +167,7 @@ export default function Home() {
             searchType === 'address' &&
             <form onSubmit={e => {
               e.preventDefault();
-              search({
-                latitude: address,
-                longitude: address
-              });
+              searchAddress();
             }}>
             <input
               placeholder="address"
