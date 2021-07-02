@@ -7,7 +7,7 @@ import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import getBusinesses from '../util/getBusinesses.js';
-import getMapUrl from '../util/getMapUrl.js';
+import getDirUrl from '../util/getDirUrl.js';
 import getCoordinates from '../util/getCoordinates.js';
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
 
   const [events, setEvents] = useState([]);
   const [businesses, setBusinesses] = useState(undefined);
-  const [mapUrl, setMapUrl] = useState(undefined);
+  const [dirUrl, setDirUrl] = useState(undefined);
 
   const router = useRouter();
 
@@ -31,12 +31,12 @@ export default function Home() {
   }, [searchType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // searches for businesses at given coordinates
-  async function search(coordinates) {
+  async function search(origin) {
     setLoading(true);
-    const newBusinesses = await getBusinesses(coordinates, events);
-    const newMapUrl = await getMapUrl(coordinates, newBusinesses);
+    const newBusinesses = await getBusinesses(origin, events);
+    const newDirUrl = getDirUrl(origin, newBusinesses);
+    setDirUrl(newDirUrl);
     setBusinesses(newBusinesses);
-    setMapUrl(newMapUrl);
     setLoading(false);
   }
 
@@ -122,15 +122,12 @@ export default function Home() {
         <div className={styles.loaddiv}>
           <p className={styles.loadtext}>Loading...</p>
         </div> :
-        (businesses && mapUrl) ?
+        businesses ?
         <>
           <div className={styles.searchbar}>
             <p>Return to calendar</p>
             <button
-              onClick={() => {
-                setBusinesses(undefined);
-                setMapUrl(undefined);
-              }}
+              onClick={() => setBusinesses(undefined)}
               className={styles.iconbutton}
             >
               <KeyboardReturnIcon />
@@ -145,14 +142,9 @@ export default function Home() {
               )
             }
           </div>
-          <div className={styles.map}>
-            <iframe
-              width="500"
-              height="300"
-              frameBorder="0"
-              allowFullScreen
-            />
-          </div>
+          <a href={dirUrl} target="_blank" rel="noopener noreferrer">
+            Open Route in Google Maps
+          </a>
         </> :
         <div className={styles.searchbar}>
           <p>
@@ -221,7 +213,7 @@ export default function Home() {
       </div>
       }
       <div style={{
-        display: ((businesses && mapUrl) || loading) ? 'none' : 'block'
+        display: (businesses || loading) ? 'none' : 'block'
       }}>
         <Calendar setEvents={setEvents} />
       </div>
