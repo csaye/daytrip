@@ -1,9 +1,9 @@
+.loadtext {
+  margin: 10px;
+}
+
 .searchbar {
-  background: #efefef;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
 .businesslist {
@@ -14,4 +14,8 @@
 .map {
   margin: 40px;
   text-align: center;
+}
+
+.iconbutton {
+  padding: 3px 3px 0 3px;
 }
