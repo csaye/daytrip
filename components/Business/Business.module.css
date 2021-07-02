@@ -10,7 +10,6 @@
 .schedule {
   min-width: 200px;
   width: 200px;
-  text-align: center;
 }
 
 .cover {
@@ -55,6 +54,10 @@
 
 .info > div {
   max-width: calc(50% - 5px);
+}
+
+.address {
+  text-align: left;
 }
 
 .rating {

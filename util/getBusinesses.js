@@ -27,6 +27,6 @@ export default async function getBusinesses(coordinates, events) {
     };
     businesses.push(business);
   }
-  // return businesses
-  return businesses;
+  // return businesses sorted by start time
+  return businesses.sort((a, b) => a.timespan.start - b.timespan.start);
 }

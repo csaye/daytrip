@@ -116,7 +116,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className={styles.home}>
       {
         loading ?
         <div className={styles.loaddiv}>
@@ -133,11 +133,18 @@ export default function Home() {
               <KeyboardReturnIcon />
             </button>
           </div>
+          <h1>
+            Schedule for{' '}
+            {
+              new Date(businesses[0].timespan.start)
+              .toLocaleString(undefined,
+                { year: 'numeric', month: 'long', day: 'numeric' }
+              )
+            }
+          </h1>
           <div className={styles.businesslist}>
             {
-              businesses
-              .sort((a, b) => a.timespan.start - b.timespan.start)
-              .map(business =>
+              businesses.map(business =>
                 <Business key={business.id} business={business} />
               )
             }
@@ -217,6 +224,6 @@ export default function Home() {
       }}>
         <Calendar setEvents={setEvents} />
       </div>
-    </>
+    </div>
   );
 }

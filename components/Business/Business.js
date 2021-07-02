@@ -30,7 +30,12 @@ export default function Business(props) {
 
   return (
     <div className={styles.container}>
-      <a href={url} target="_blank" rel="noreferrer noopener">
+      <a
+        className="nostyle"
+        href={url}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
       <div className={styles.content}>
         <div className={styles.schedule}>
           <p>{term}</p>
@@ -42,7 +47,7 @@ export default function Business(props) {
         <div className={styles.summary}>
           <h2 className={styles.title}>{name}</h2>
           <div className={styles.info}>
-            <div>
+            <div className={styles.address}>
               <p>{address1}</p>
               <p>{city}</p>
               <p>{state} {zip_code}</p>

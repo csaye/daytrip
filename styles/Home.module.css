@@ -1,3 +1,7 @@
+.home {
+  text-align: center;
+}
+
 .loaddiv {
   display: flex;
   align-items: center;
@@ -7,10 +11,6 @@
 
 .loadtext {
   font-size: 32px;
-}
-
-.searchbar {
-  text-align: center;
 }
 
 .searchbar form {
@@ -30,7 +30,6 @@
 
 .map {
   margin: 40px;
-  text-align: center;
 }
 
 .iconbutton {
