@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import getBusinesses from '../util/getBusinesses.js';
 import getDirUrl from '../util/getDirUrl.js';
-import getCoordinates from '../util/getCoordinates.js';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -71,16 +70,8 @@ export default function Home() {
       alert('Must create at least one event.');
       return;
     }
-    const json = await getCoordinates(address);
-    // if valid address
-    if (json?.geometry?.location) {
-      const location = json.geometry.location;
-      search({
-        latitude: location.lat,
-        longitude: location.lng
-      });
-    // if invalid address
-    } else setMessage({ error: true, text: 'Invalid address.' });
+    // search with address
+    search({ location: address });
   }
 
   // searches with coordinates
