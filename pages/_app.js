@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import '../styles/globals.css';
 import styles from '../styles/App.module.css';
 import '@fullcalendar/common/main.css';
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <div className={styles.header}>
         <h1>Daytrip</h1>
+        <Image src="/logo.png" width="40" height="40" alt="logo" />
       </div>
       <Component {...pageProps} />
     </>

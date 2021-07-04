@@ -4,8 +4,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 5px #333;
 }
 
 .header > h1 {
   font-family: 'Poppins', sans-serif;
+}
+
+.header > div {
+  margin-left: 5px!important;
 }
