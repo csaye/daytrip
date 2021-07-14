@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import '../styles/globals.css';
+import '../styles/vars.css';
 import styles from '../styles/App.module.css';
 import '@fullcalendar/common/main.css';
 import '@fullcalendar/daygrid/main.css';

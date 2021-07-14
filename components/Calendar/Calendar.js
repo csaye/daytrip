@@ -14,7 +14,7 @@ export default function Calendar(props) {
     // clear selection
     calendar.unselect();
     // add event
-    const title = prompt('Enter event term (e.g. ice cream, park, diner): ');
+    const title = prompt('Enter event term (e.g. ice cream, park, dinner): ');
     if (title) {
       calendar.addEvent({
         id: uuid(),

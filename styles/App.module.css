@@ -1,10 +1,10 @@
 .header {
   height: 60px;
-  background: #ddd;
+  background: var(--gray0);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 5px #333;
+  box-shadow: 0 0 5px #000;
 }
 
 .header > h1 {

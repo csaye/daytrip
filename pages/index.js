@@ -116,6 +116,7 @@ export default function Home() {
         businesses ?
         <>
           <div className={styles.search}>
+            <div className={styles.background} />
             <p>Return to calendar</p>
             <button
               onClick={() => setBusinesses(undefined)}
@@ -133,17 +134,17 @@ export default function Home() {
               )
             }
           </h1>
+          <div className={styles.mapslink}>
+            <a href={dirUrl} target="_blank" rel="noopener noreferrer">
+              Open Route in Google Maps
+            </a>
+          </div>
           <div className={styles.businesslist}>
             {
               businesses.map(business =>
                 <Business key={business.id} business={business} />
               )
             }
-          </div>
-          <div className={styles.mapslink}>
-            <a href={dirUrl} target="_blank" rel="noopener noreferrer">
-              Open Route in Google Maps
-            </a>
           </div>
         </> :
         <div className={styles.search}>
