@@ -13,13 +13,37 @@
   font-size: 32px;
 }
 
-.searchbar form {
+.search {
+  overflow: auto;
+  height: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: #ddd;
+  align-items: center;
+  justify-content: center;
+}
+
+.background {
+  height: 100%;
+  width: 100%;
+  background-image:
+  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  url('/img/badlands.jpg');
+  background-position: center center;
+  background-size: cover;
+  z-index: -1;
+  position: absolute;
+  inset: 0;
+}
+
+.search form {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.searchbar form > input {
+.search form > input {
   margin-right: 5px;
 }
 
@@ -34,4 +58,9 @@
 
 .iconbutton {
   padding: 3px 3px 0 3px;
+}
+
+.mapslink {
+  margin: 20px;
+  font-size: 24px;
 }
