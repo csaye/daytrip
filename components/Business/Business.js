@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import StarIcon from '@material-ui/icons/Star';
@@ -42,7 +43,7 @@ export default function Business(props) {
           <p>{getTimeStr(start)} → {getTimeStr(end)}</p>
         </div>
         <div className={styles.cover}>
-          <img src={image_url} alt=""/>
+          <Image height="250" width="400" src={image_url} alt=""/>
         </div>
         <div className={styles.summary}>
           <h2 className={styles.title}>{name}</h2>
